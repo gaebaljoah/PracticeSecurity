@@ -3,6 +3,8 @@ package com.cos.security.controller;
 import com.cos.security.model.User;
 import com.cos.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,5 +70,16 @@ public class IndexController {
         userRepository.save(user); //인코딩된 패스워드를 넣어준다.
 
         return "redirect:/loginForm";
+    }
+
+    @Secured("ROLE_ADMIN")//springConfig에서 설정한 hasRole('ROLE_ADMIN')만 접근 가능 
+    @GetMapping("/info")
+    public @ResponseBody String info (){
+        return "개인정보";
+    }
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_MANAGER')") //여러개의 권한 체크시 이 어노테이션 사용 가능 hasRole 문법 사용가능
+    @GetMapping("/data")
+    public @ResponseBody String data (){
+        return "데이터 정보";
     }
 }
