@@ -21,6 +21,10 @@ public class User {
     @CreationTimestamp
     private Timestamp createDate;
 
+    public User() {}
+    //Spring Security는 인증(authentication)을 위해 사용자 정보를 로드하기 위해
+    //UserDetailsService를 사용하는데, 이때 엔터티 클래스는 기본 생성자를 가져야 합니다.
+
     public User(Integer id, String username, String password, String email, String role, Timestamp createDate) {
         this.id = id;
         this.username = username;
